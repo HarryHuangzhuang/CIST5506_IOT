@@ -7,8 +7,8 @@
 #include "WiFi.h"
 
 // MQTT topics for the device
-#define AWS_IOT_PUBLISH_TOPIC   "esp32/pub"
-#define AWS_IOT_SUBSCRIBE_TOPIC "esp32/sub"
+#define AWS_IOT_PUBLISH_TOPIC   "occupancymonitor/pub"
+#define AWS_IOT_SUBSCRIBE_TOPIC "occupancymonitor/sub"
 
 WiFiClientSecure wifi_client = WiFiClientSecure();
 MQTTClient mqtt_client = MQTTClient(256); //256 indicates the maximum size for packets being published and received.
