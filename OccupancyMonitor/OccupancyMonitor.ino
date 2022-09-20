@@ -5,10 +5,11 @@
 
 #include <ArduinoJson.h> //ArduinoJson Library Source: https://github.com/bblanchon/ArduinoJson
 #include "WiFi.h"
+#//include <stdio.h>
 
 // MQTT topics for the device
-#define AWS_IOT_PUBLISH_TOPIC   "occupancymonitor/pub"
-#define AWS_IOT_SUBSCRIBE_TOPIC "occupancymonitor/sub"
+#define AWS_IOT_PUBLISH_TOPIC   "occupancymonitor/room1/pub"
+#define AWS_IOT_SUBSCRIBE_TOPIC "occupancymonitor/room1/sub"
 
 WiFiClientSecure wifi_client = WiFiClientSecure();
 MQTTClient mqtt_client = MQTTClient(256); //256 indicates the maximum size for packets being published and received.
@@ -66,8 +67,11 @@ void publishMessage()
   //Create a JSON document of size 200 bytes, and populate it
   //See https://arduinojson.org/
   StaticJsonDocument<200> doc;
-  doc["elapsed_time"] = millis() - t1;
-  doc["value"] = random(1000);
+  doc["room_name"] = "room1";
+  //doc["timestamp"] = 
+  int count = random(30);
+  doc["count"] = String(count);
+  //sprintf(doc["count"], "%d", count); // TODO: Update this to actual count
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); // print to mqtt_client
 
@@ -91,5 +95,5 @@ void setup() {
 void loop() {
   publishMessage();
   mqtt_client.loop();
-  delay(4000);
+  delay(10000);
 }
